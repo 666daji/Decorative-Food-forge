@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/potion",
+  "render_type": "cutout",
+  "textures":{
+    "6": "minecraft:block/honey_overlay"
+  }
+}

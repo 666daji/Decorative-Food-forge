@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/carrot_5",
+  "render_type": "cutout",
+  "textures": {
+    "0": "minecraft:block/golden_carrot",
+    "particle": "minecraft:item/golden_carrot"
+  }
+}

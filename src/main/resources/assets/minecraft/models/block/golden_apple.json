@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/apple",
+  "render_type": "cutout",
+  "textures": {
+    "0": "minecraft:block/golden_apple_stem",
+    "1": "minecraft:block/golden_apple",
+    "particle": "minecraft:item/golden_apple"
+  }
+}
