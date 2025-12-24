@@ -23,6 +23,6 @@ public class BlocksMixin {
 
     @Unique
     private static void dfood$register(String id, Block block) {
-        Registry.register(BuiltInRegistries.BLOCK, ResourceLocation.parse(id), block);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(id), block);
     }
 }

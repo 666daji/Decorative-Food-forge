@@ -24,7 +24,7 @@ public abstract class FoodToBlockMixin {
     @ModifyVariable(method = "registerItem(Ljava/lang/String;Lnet/minecraft/world/item/Item;)Lnet/minecraft/world/item/Item;", at = @At("HEAD"), argsOnly = true)
     private static Item modifyItem(Item item, String value) {
         if (FoodToBlocks.FOOD_MAP.containsKey(value)) {
-            Registry.register(BuiltInRegistries.ITEM, ResourceLocation.parse(value + "_de"), item);
+            Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(value + "_de"), item);
             return FoodToBlocks.getItem(value);
         } else {
             return item;

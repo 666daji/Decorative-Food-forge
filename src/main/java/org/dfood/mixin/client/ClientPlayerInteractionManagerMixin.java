@@ -25,7 +25,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
 
     /**
      * 注入到 performUseItemOn 方法中，在检查潜行绕过之前
-     * 这样当玩家潜行时，仍能与我们模组的食物方块交互
+     * 这样当玩家潜行时，仍能与模组的食物方块交互
      */
     @Inject(method = "performUseItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;doesSneakBypassUse(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)Z", ordinal = 0), cancellable = true)
     private void onPerformUseItemOn(LocalPlayer player, InteractionHand hand,

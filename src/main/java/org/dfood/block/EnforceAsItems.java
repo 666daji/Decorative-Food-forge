@@ -10,6 +10,6 @@ public class EnforceAsItems {
     public static final FoodBlock.EnforceAsItem GLOW_BERRIES = createAsItem("glow_berries");
 
     private static FoodBlock.EnforceAsItem createAsItem(String item) {
-        return () -> ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(item));
+        return () -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
     }
 }

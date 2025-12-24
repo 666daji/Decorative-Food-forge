@@ -10,6 +10,6 @@ public class ModTags {
     public static final TagKey<Block> FOOD_PLACE = of("food_place");
 
     private static TagKey<Block> of(String id) {
-        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Threedfood.MOD_ID, id));
+        return TagKey.create(Registries.BLOCK, new ResourceLocation(Threedfood.MOD_ID, id));
     }
 }
