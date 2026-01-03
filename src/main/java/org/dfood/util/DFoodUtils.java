@@ -3,7 +3,9 @@ package org.dfood.util;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 import org.dfood.block.FoodBlock;
 import org.dfood.item.DoubleBlockItem;
 import org.dfood.item.HaveBlock;
@@ -72,5 +74,18 @@ public class DFoodUtils {
             return haveBlock.getBlock().defaultBlockState();
         }
         return null;
+    }
+
+    /**
+     * 获取食物方块的基础设置。
+     * @return 食物方块的基础设置。
+     * @apiNote 这不是必须的，但是推荐使用这个方法来创建食物方块
+     */
+    public static BlockBehaviour.Properties getFoodBlockSettings() {
+        return BlockBehaviour.Properties.of()
+                .strength(0.1F, 0.1F)
+                .noOcclusion()
+                .isValidSpawn((state, getter, pos, type) -> false)
+                .pushReaction(PushReaction.DESTROY);
     }
 }

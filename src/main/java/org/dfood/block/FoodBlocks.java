@@ -4,8 +4,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 import org.dfood.sound.ModSoundGroups;
+import org.dfood.util.DFoodUtils;
 import org.dfood.util.IntegerPropertyManager;
 
 import java.util.HashMap;
@@ -19,155 +19,137 @@ public class FoodBlocks {
 
     // 零食
     public static final Block COOKIE = registerFoodBlock("cookie", 10,
-            MapColor.TERRACOTTA_YELLOW, 0.2F, SoundType.STONE);
+            MapColor.TERRACOTTA_YELLOW, SoundType.STONE);
     public static final Block APPLE = registerFoodBlock("apple", 5,
-            MapColor.COLOR_RED, 0.2F, SoundType.STONE);
+            MapColor.COLOR_RED, SoundType.STONE);
     public static final Block MELON_SLICE = registerFoodBlock("melon_slice", 5,
-            MapColor.COLOR_LIGHT_GREEN, 0.2F, SoundType.STONE);
+            MapColor.COLOR_LIGHT_GREEN, SoundType.STONE);
     public static final Block BREAD = registerFoodBlock("bread", 5,
-            MapColor.TERRACOTTA_YELLOW, 0.2F, ModSoundGroups.BREAD);
+            MapColor.TERRACOTTA_YELLOW, ModSoundGroups.BREAD);
 
     // 蔬菜类
     public static final Block BEETROOT = registerFoodBlock("beetroot", 5,
-            MapColor.COLOR_RED, 0.2F, SoundType.CANDLE);
+            MapColor.COLOR_RED, SoundType.CANDLE);
     public static final Block POTATO = registerFoodBlock("potato", 5,
-            MapColor.GOLD, 0.2F, SoundType.CANDLE, EnforceAsItems.POTATO);
+            MapColor.GOLD, SoundType.CANDLE, EnforceAsItems.POTATO);
     public static final Block BAKED_POTATO = registerFoodBlock("baked_potato", 5,
-            MapColor.GOLD, 0.2F, SoundType.CANDLE);
+            MapColor.GOLD, SoundType.CANDLE);
     public static final Block CARROT = registerFoodBlock("carrot", 5,
-            MapColor.COLOR_YELLOW, 0.2F, SoundType.CANDLE, EnforceAsItems.CARROT);
+            MapColor.COLOR_YELLOW, SoundType.CANDLE, EnforceAsItems.CARROT);
     public static final Block SWEET_BERRIES = registerFoodBlock("sweet_berries", 5,
-            MapColor.COLOR_RED, 0.2F, SoundType.SWEET_BERRY_BUSH, EnforceAsItems.SWEET_BERRIES);
+            MapColor.COLOR_RED, SoundType.SWEET_BERRY_BUSH, EnforceAsItems.SWEET_BERRIES);
     public static final Block GLOW_BERRIES = registerFoodBlock("glow_berries",
             FoodBlock.Builder.create()
                     .maxFood(12)
                     .cItem(EnforceAsItems.GLOW_BERRIES)
-                    .settings(BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.COLOR_YELLOW).strength(0.2F, 0.2F)
-                            .noOcclusion().sound(SoundType.SWEET_BERRY_BUSH)
-                            .pushReaction(PushReaction.DESTROY)
-                            .lightLevel(state -> {
-                                if (state.getBlock() instanceof FoodBlock) {
-                                    return state.getValue(IntegerPropertyManager.create("number_of_food", 12)) + 3;
-                                }
-                                return 0;
-                            }))
+                    .settings(DFoodUtils.getFoodBlockSettings()
+                            .mapColor(MapColor.COLOR_YELLOW)
+                            .sound(SoundType.SWEET_BERRY_BUSH)
+                            .lightLevel(state -> state.getBlock() instanceof FoodBlock ?
+                                state.getValue(IntegerPropertyManager.create("number_of_food", 12)) + 3 : 0))
                     .build());
 
     // 金制食物
     public static final Block GOLDEN_APPLE = registerFoodBlock("golden_apple", 5,
-            MapColor.GOLD, 0.2F, null);
+            MapColor.GOLD, null);
     public static final Block GOLDEN_CARROT = registerFoodBlock("golden_carrot", 5,
-            MapColor.GOLD, 0.2F, SoundType.CANDLE);
+            MapColor.GOLD, SoundType.CANDLE);
     public static final Block GLISTERING_MELON_SLICE = registerFoodBlock("glistering_melon_slice", 5,
-            MapColor.COLOR_LIGHT_BLUE, 0.2F, null);
+            MapColor.COLOR_LIGHT_BLUE, null);
 
     // 生熟肉类
     public static final Block CHICKEN = registerFoodBlock("chicken", 1,
-            MapColor.COLOR_LIGHT_GRAY, 0.2F, ModSoundGroups.MEAT);
+            MapColor.COLOR_LIGHT_GRAY, ModSoundGroups.MEAT);
     public static final Block COOKED_CHICKEN = registerFoodBlock("cooked_chicken", 1,
-            MapColor.TERRACOTTA_YELLOW, 0.2F, ModSoundGroups.MEAT);
+            MapColor.TERRACOTTA_YELLOW, ModSoundGroups.MEAT);
     public static final Block BEEF = registerFoodBlock("beef", 3,
-            MapColor.COLOR_BROWN, 0.3F, ModSoundGroups.MEAT);
+            MapColor.COLOR_BROWN, ModSoundGroups.MEAT);
     public static final Block COOKED_BEEF = registerFoodBlock("cooked_beef", 3,
-            MapColor.TERRACOTTA_BROWN, 0.3F, ModSoundGroups.MEAT);
+            MapColor.TERRACOTTA_BROWN, ModSoundGroups.MEAT);
     public static final Block MUTTON = registerFoodBlock("mutton", 3,
-            MapColor.COLOR_PINK, 0.2F, ModSoundGroups.MEAT);
+            MapColor.COLOR_PINK, ModSoundGroups.MEAT);
     public static final Block COOKED_MUTTON = registerFoodBlock("cooked_mutton", 3,
-            MapColor.TERRACOTTA_PINK, 0.2F, ModSoundGroups.MEAT);
+            MapColor.TERRACOTTA_PINK, ModSoundGroups.MEAT);
     public static final Block PORKCHOP = registerFoodBlock("porkchop", 3,
-            MapColor.COLOR_PINK, 0.2F, ModSoundGroups.MEAT);
+            MapColor.COLOR_PINK, ModSoundGroups.MEAT);
     public static final Block COOKED_PORKCHOP = registerFoodBlock("cooked_porkchop", 3,
-            MapColor.TERRACOTTA_PINK, 0.2F, ModSoundGroups.MEAT);
+            MapColor.TERRACOTTA_PINK, ModSoundGroups.MEAT);
     public static final Block RABBIT = registerFoodBlock("rabbit", 1,
-            MapColor.COLOR_BROWN, 0.2F, ModSoundGroups.MEAT);
+            MapColor.COLOR_BROWN, ModSoundGroups.MEAT);
     public static final Block COOKED_RABBIT = registerFoodBlock("cooked_rabbit", 1,
-            MapColor.TERRACOTTA_BROWN, 0.2F, ModSoundGroups.MEAT);
+            MapColor.TERRACOTTA_BROWN, ModSoundGroups.MEAT);
 
     // 鱼类
     public static final Block COD = registerFoodBlock("cod", 3,
-            MapColor.COLOR_LIGHT_BLUE, 0.2F, ModSoundGroups.FISH);
+            MapColor.COLOR_LIGHT_BLUE, ModSoundGroups.FISH);
     public static final Block COOKED_COD = registerFoodBlock("cooked_cod", 3,
-            MapColor.TERRACOTTA_LIGHT_BLUE, 0.2F, ModSoundGroups.FISH);
+            MapColor.TERRACOTTA_LIGHT_BLUE, ModSoundGroups.FISH);
     public static final Block SALMON = registerFoodBlock("salmon", 3,
-            MapColor.COLOR_LIGHT_BLUE, 0.2F, ModSoundGroups.FISH);
+            MapColor.COLOR_LIGHT_BLUE, ModSoundGroups.FISH);
     public static final Block COOKED_SALMON = registerFoodBlock("cooked_salmon", 3,
-            MapColor.TERRACOTTA_LIGHT_BLUE, 0.2F, ModSoundGroups.FISH);
+            MapColor.TERRACOTTA_LIGHT_BLUE, ModSoundGroups.FISH);
     public static final Block PUFFERFISH = registerFoodBlock("pufferfish", 1,
-            MapColor.COLOR_LIGHT_BLUE, 0.2F, ModSoundGroups.FISH);
+            MapColor.COLOR_LIGHT_BLUE, ModSoundGroups.FISH);
 
     // 炖菜
     public static final Block RABBIT_STEW = registerFoodBlock("rabbit_stew", 1,
-            MapColor.COLOR_BROWN, 0.1F, SoundType.DECORATED_POT);
+            MapColor.COLOR_BROWN, SoundType.DECORATED_POT);
     public static final Block MUSHROOM_STEW = registerFoodBlock("mushroom_stew", 1,
-            MapColor.COLOR_BROWN, 0.1F, SoundType.DECORATED_POT);
+            MapColor.COLOR_BROWN, SoundType.DECORATED_POT);
     public static final Block BEETROOT_SOUP = registerFoodBlock("beetroot_soup", 1,
-            MapColor.COLOR_BROWN, 0.1F, SoundType.DECORATED_POT);
+            MapColor.COLOR_BROWN, SoundType.DECORATED_POT);
     public static final Block SUSPICIOUS_STEW = registerFoodBlock("suspicious_stew",
             SuspiciousStewBlock.Builder.create()
                     .maxFood(1)
-                    .settings(BlockBehaviour.Properties.of()
+                    .settings(DFoodUtils.getFoodBlockSettings()
                             .mapColor(MapColor.COLOR_BROWN)
-                            .strength(0.1F, 0.1F)
-                            .noOcclusion()
                             .sound(SoundType.DECORATED_POT)
-                            .pushReaction(PushReaction.DESTROY))
+                    )
                     .build());
     public static final Block BOWL = registerFoodBlock("bowl", 1,
-            MapColor.COLOR_BROWN, 0.1F, SoundType.DECORATED_POT);
+            MapColor.COLOR_BROWN, SoundType.DECORATED_POT);
 
     // 桶
     public static final Block BUCKET = registerFoodBlock("bucket", 1,
-            MapColor.SNOW, 0.2F, ModSoundGroups.BUCKET);
+            MapColor.SNOW, ModSoundGroups.BUCKET);
     public static final Block WATER_BUCKET = registerFoodBlock("water_bucket", 1,
-            MapColor.COLOR_BLUE, 0.2F, ModSoundGroups.WATER_BUCKET);
+            MapColor.COLOR_BLUE, ModSoundGroups.WATER_BUCKET);
     public static final Block MILK_BUCKET = registerFoodBlock("milk_bucket", 1,
-            MapColor.SNOW, 0.2F, ModSoundGroups.WATER_BUCKET);
+            MapColor.SNOW, ModSoundGroups.WATER_BUCKET);
     public static final Block LAVA_BUCKET = registerFoodBlock("lava_bucket", 1,
-            BlockBehaviour.Properties.of()
+            DFoodUtils.getFoodBlockSettings()
                     .sound(ModSoundGroups.LAVA_BUCKET)
-                    .strength(0.2F, 0.2F)
                     .mapColor(MapColor.COLOR_ORANGE)
                     .lightLevel(state -> 15));
 
     // 其他
     public static final Block PUMPKIN_PIE = registerFoodBlock("pumpkin_pie", 1,
-            MapColor.TERRACOTTA_ORANGE, 0.2F, SoundType.WOOL);
+            MapColor.TERRACOTTA_ORANGE, SoundType.WOOL);
     public static final Block CHORUS_FRUIT = registerFoodBlock("chorus_fruit",
             ChorusFruitBlock.Builder.create()
                     .maxFood(5)
-                    .settings(BlockBehaviour.Properties.of()
+                    .settings(DFoodUtils.getFoodBlockSettings()
                             .mapColor(MapColor.COLOR_PURPLE)
-                            .strength(0.2F, 0.2F)
-                            .noOcclusion()
-                            .sound(ModSoundGroups.CHORUS_FRUIT)
-                            .pushReaction(PushReaction.DESTROY))
+                            .sound(ModSoundGroups.CHORUS_FRUIT))
                     .build());
-    public static final Block EGG = registerFoodBlock("egg", 5, MapColor.SNOW, 0.2F, ModSoundGroups.EGG);
+    public static final Block EGG = registerFoodBlock("egg", 5, MapColor.SNOW, ModSoundGroups.EGG);
     public static final Block TOTEM_OF_UNDYING = registerFoodBlock("totem_of_undying",
-            new ModTotemBlock(BlockBehaviour.Properties.of()
+            new ModTotemBlock(DFoodUtils.getFoodBlockSettings()
                     .mapColor(MapColor.COLOR_YELLOW)
-                    .strength(0.2F, 0.2F)
-                    .noOcclusion()
-                    .sound(ModSoundGroups.EGG)
-                    .pushReaction(PushReaction.DESTROY)));
+                    .sound(ModSoundGroups.EGG)));
 
     // 药水
     public static final Block POTION = registerFoodBlock("potion",
             PotionBlock.Builder.create()
                     .maxFood(3)
-                    .settings(BlockBehaviour.Properties.of()
+                    .settings(DFoodUtils.getFoodBlockSettings()
                             .mapColor(MapColor.COLOR_PURPLE)
-                            .strength(0.2F, 0.2F)
-                            .noOcclusion()
-                            .isValidSpawn((state, getter, pos, type) -> false)
-                            .sound(ModSoundGroups.POTION)
-                            .pushReaction(PushReaction.DESTROY))
+                            .sound(ModSoundGroups.POTION))
                     .build());
     public static final Block GLASS_BOTTLE = registerFoodBlock("glass_bottle", 3,
-            MapColor.SNOW, 0.2F, ModSoundGroups.POTION);
+            MapColor.SNOW, ModSoundGroups.POTION);
     public static final Block HONEY_BOTTLE = registerFoodBlock("honey_bottle", 3,
-            MapColor.COLOR_ORANGE, 0.2F, ModSoundGroups.POTION);
+            MapColor.COLOR_ORANGE, ModSoundGroups.POTION);
 
     /**
      * 直接注册已创建的方块
@@ -188,20 +170,17 @@ public class FoodBlocks {
     /**
      * 使用构建器创建普通食物方块
      */
-    private static Block registerFoodBlock(String id, int maxFood, MapColor mapColor, float strength, SoundType sound){
-        return registerFoodBlock(id, maxFood, mapColor, strength, sound, null);
+    private static Block registerFoodBlock(String id, int maxFood, MapColor mapColor, SoundType sound){
+        return registerFoodBlock(id, maxFood, mapColor, sound, null);
     }
 
     /**
      * 使用构建器创建普通食物方块（带强制物品类型）
      */
-    private static Block registerFoodBlock(String id, int maxFood, MapColor mapColor, float strength,
+    private static Block registerFoodBlock(String id, int maxFood, MapColor mapColor,
                                            SoundType sound, FoodBlock.EnforceAsItem cropType){
-        BlockBehaviour.Properties propsBuilder = BlockBehaviour.Properties.of()
-                .mapColor(mapColor)
-                .strength(strength, strength)
-                .noOcclusion()
-                .pushReaction(PushReaction.DESTROY);
+        BlockBehaviour.Properties propsBuilder = DFoodUtils.getFoodBlockSettings()
+                .mapColor(mapColor);
 
         if (sound != null) {
             propsBuilder.sound(sound);

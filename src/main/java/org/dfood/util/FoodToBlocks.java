@@ -88,14 +88,14 @@ public class FoodToBlocks {
         FOOD_MAP.put("pufferfish", createItem(FoodBlocks.PUFFERFISH, Foods.PUFFERFISH));
 
         // 炖菜类
-        FOOD_MAP.put("rabbit_stew", new ModStewItem(FoodBlocks.RABBIT_STEW,
-                new Item.Properties().stacksTo(1).food(Foods.RABBIT_STEW)));
-        FOOD_MAP.put("mushroom_stew", new ModStewItem(FoodBlocks.MUSHROOM_STEW,
-                new Item.Properties().stacksTo(1).food(Foods.MUSHROOM_STEW)));
-        FOOD_MAP.put("beetroot_soup", new ModStewItem(FoodBlocks.BEETROOT_SOUP,
-                new Item.Properties().stacksTo(1).food(Foods.BEETROOT_SOUP)));
-        FOOD_MAP.put("suspicious_stew", new ModSuspiciousStewItem(FoodBlocks.SUSPICIOUS_STEW,
-                new Item.Properties().stacksTo(1).food(Foods.SUSPICIOUS_STEW)));
+        FOOD_MAP.put("rabbit_stew", new ModStewItem(new Item.Properties().stacksTo(1).food(Foods.RABBIT_STEW),
+                FoodBlocks.RABBIT_STEW));
+        FOOD_MAP.put("mushroom_stew", new ModStewItem(new Item.Properties().stacksTo(1).food(Foods.MUSHROOM_STEW),
+                FoodBlocks.MUSHROOM_STEW));
+        FOOD_MAP.put("beetroot_soup", new ModStewItem(new Item.Properties().stacksTo(1).food(Foods.BEETROOT_SOUP),
+                FoodBlocks.BEETROOT_SOUP));
+        FOOD_MAP.put("suspicious_stew", new ModSuspiciousStewItem(new Item.Properties().stacksTo(1).food(Foods.SUSPICIOUS_STEW),
+                FoodBlocks.SUSPICIOUS_STEW));
         FOOD_MAP.put("bowl", new BlockItem(FoodBlocks.BOWL, new Item.Properties()));
 
         // 桶
@@ -106,9 +106,8 @@ public class FoodToBlocks {
 
         // 其他
         FOOD_MAP.put("pumpkin_pie", createItem(FoodBlocks.PUMPKIN_PIE, Foods.PUMPKIN_PIE));
-        FOOD_MAP.put("chorus_fruit", new ModChorusFruitItem(FoodBlocks.CHORUS_FRUIT,
-                new Item.Properties().food(Foods.CHORUS_FRUIT)));
-        FOOD_MAP.put("egg", new ModEggItem(FoodBlocks.EGG, new Item.Properties()));
+        FOOD_MAP.put("chorus_fruit", new ModChorusFruitItem(new Item.Properties().food(Foods.CHORUS_FRUIT), FoodBlocks.CHORUS_FRUIT));
+        FOOD_MAP.put("egg", new ModEggItem(new Item.Properties(), FoodBlocks.EGG));
         FOOD_MAP.put("totem_of_undying", new BlockItem(FoodBlocks.TOTEM_OF_UNDYING,
                 new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
@@ -150,8 +149,8 @@ public class FoodToBlocks {
             switch (id) {
                 // 桶
                 case "milk_bucket":
-                    item = new ModMilkBucketItem(FoodBlocks.MILK_BUCKET,
-                            new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
+                    item = new ModMilkBucketItem(
+                            new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), FoodBlocks.MILK_BUCKET);
                     break;
                 case "water_bucket":
                     item = new ModBucketItem(Fluids.WATER,

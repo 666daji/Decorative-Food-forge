@@ -30,7 +30,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.dfood.Threedfood;
 import org.dfood.item.DoubleBlockItem;
 import org.dfood.item.HaveBlock;
 import org.dfood.shape.FoodShapeHandle;
@@ -177,7 +176,7 @@ public class FoodBlock extends Block {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
         // 检查手持物品是否与方块匹配
-        boolean isHoldingSameItem = isSame(handStack, blockEntity);
+        boolean isHoldingSameItem = isSame(handStack, state, blockEntity);
 
         // 尝试添加物品的情况
         if (isHoldingSameItem && currentCount < MAX_FOOD &&
@@ -250,12 +249,12 @@ public class FoodBlock extends Block {
             BlockState newState = state.setValue(NUMBER_OF_FOOD, newCount);
             world.setBlock(pos, newState, Block.UPDATE_ALL);
         } else {
-            world.destroyBlock(pos, false);
+            world.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
         }
 
         // 给予玩家物品（非创造模式）
         if (!player.isCreative()) {
-            ItemStack foodItem = createStack(1, blockEntity);
+            ItemStack foodItem = createStack(1, state, blockEntity);
             if (!player.addItem(foodItem)) {
                 Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), foodItem);
             }
@@ -268,18 +267,20 @@ public class FoodBlock extends Block {
      * 检查手持物品是否与方块匹配
      * @return 匹配返回true，否则返回false
      */
-    public boolean isSame(ItemStack stack, BlockEntity blockEntity) {
+    public boolean isSame(ItemStack stack, BlockState state, BlockEntity blockEntity) {
         return stack.getItem() == this.asItem();
     }
 
     /**
      * 创建对应物品堆栈
-     * @param count        物品数量
-     * @param blockEntity  对应的方块实体（可为null）
+     *
+     * @param count 物品数量
+     * @param state 对应的方块状态
+     * @param blockEntity 对应的方块实体（可为null）
      * @return 物品堆栈
      * @throws IllegalArgumentException 当数量不在有效范围内时抛出
      */
-    public ItemStack createStack(int count, @Nullable BlockEntity blockEntity) {
+    public ItemStack createStack(int count, BlockState state, @Nullable BlockEntity blockEntity) {
         if (count <= 0 || count > MAX_FOOD) {
             throw new IllegalArgumentException("Count must be between 1 and " + MAX_FOOD);
         }

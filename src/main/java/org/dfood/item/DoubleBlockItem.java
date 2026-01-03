@@ -1,4 +1,3 @@
-// DoubleBlockItem.java
 package org.dfood.item;
 
 import net.minecraft.world.item.BlockItem;

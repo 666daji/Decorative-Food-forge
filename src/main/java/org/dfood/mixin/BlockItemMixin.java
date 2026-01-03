@@ -1,6 +1,7 @@
 package org.dfood.mixin;
 
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -27,13 +28,15 @@ public abstract class BlockItemMixin {
      */
     @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
     private void useOnBlockMixin(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        var player = context.getPlayer();
-        var placementContext = new BlockPlaceContext(context);
-        BlockState expectedState = getPlacementState(placementContext);
+        if (DFoodUtils.isModFoodItem(((BlockItem)(Object)this))) {
+            Player player = context.getPlayer();
+            BlockPlaceContext placementContext = new BlockPlaceContext(context);
+            BlockState expectedState = getPlacementState(placementContext);
 
-        if (expectedState != null && player != null &&
-                !player.isCrouching() && DFoodUtils.isModFoodBlock(expectedState.getBlock())) {
-            cir.setReturnValue(InteractionResult.PASS);
+            if (expectedState != null && player != null &&
+                    !player.isCrouching() && DFoodUtils.isModFoodBlock(expectedState.getBlock())) {
+                cir.setReturnValue(InteractionResult.PASS);
+            }
         }
     }
 }

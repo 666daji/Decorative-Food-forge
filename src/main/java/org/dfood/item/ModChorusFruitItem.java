@@ -1,61 +1,76 @@
 package org.dfood.item;
 
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
+import net.minecraft.world.level.Level;
+import org.dfood.util.DFoodUtils;
+import org.jetbrains.annotations.Nullable;
 
-public class ModChorusFruitItem extends BlockItem {
-    public ModChorusFruitItem(Block block, Properties properties) {
-        super(block, properties);
+import java.util.List;
+
+public class ModChorusFruitItem extends ChorusFruitItem implements HaveBlock{
+    private final Block block;
+
+    public ModChorusFruitItem(Properties properties, Block block) {
+        super(properties);
+        this.block = block;
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
-        ItemStack itemStack = super.finishUsingItem(stack, world, user);
-        if (!world.isClientSide) {
-            double d = user.getX();
-            double e = user.getY();
-            double f = user.getZ();
+    public Block getBlock() {
+        return block;
+    }
 
-            for (int i = 0; i < 16; i++) {
-                double g = user.getX() + (user.getRandom().nextDouble() - 0.5) * 16.0;
-                double h = Mth.clamp(
-                        user.getY() + (user.getRandom().nextInt(16) - 8),
-                        world.getMinBuildHeight(),
-                        world.getMinBuildHeight() + ((ServerLevel)world).getLogicalHeight() - 1
-                );
-                double j = user.getZ() + (user.getRandom().nextDouble() - 0.5) * 16.0;
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        Item item = context.getItemInHand().getItem();
 
-                if (user.isPassenger()) {
-                    user.stopRiding();
-                }
-
-                Vec3 vec3 = user.position();
-                if (user.randomTeleport(g, h, j, true)) {
-                    world.gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(user));
-                    SoundEvent soundEvent = user instanceof Fox ? SoundEvents.FOX_TELEPORT : SoundEvents.CHORUS_FRUIT_TELEPORT;
-                    world.playSound(null, d, e, f, soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F);
-                    user.playSound(soundEvent, 1.0F, 1.0F);
-                    break;
-                }
-            }
-
-            if (user instanceof Player player) {
-                player.getCooldowns().addCooldown(this, 20);
-            }
+        // 仅当父类方法失败时才尝试放置方块
+        if (super.useOn(context) != InteractionResult.PASS ||
+                (player != null && !player.isShiftKeyDown() && DFoodUtils.isModFoodItem(item))) {
+            return InteractionResult.PASS;
         }
 
-        return itemStack;
+        InteractionResult actionResult = this.place(new BlockPlaceContext(context));
+        if (!actionResult.consumesAction() && this.isEdible()) {
+            InteractionResult actionResult2 = this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
+            return actionResult2 == InteractionResult.CONSUME ? InteractionResult.CONSUME_PARTIAL : actionResult2;
+        } else {
+            return actionResult;
+        }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
+        super.appendHoverText(stack, world, tooltip, context);
+        this.getBlock().appendHoverText(stack, world, tooltip, context);
+    }
+
+    @Override
+    public boolean canBeDepleted() {
+        return !(this.block instanceof ShulkerBoxBlock);
+    }
+
+    @Override
+    public void onDestroyed(ItemEntity entity) {
+        if (this.block instanceof ShulkerBoxBlock) {
+            ItemStack itemStack = entity.getItem();
+            CompoundTag nbtCompound = HaveBlock.getBlockEntityNbt(itemStack);
+            if (nbtCompound != null && nbtCompound.contains("Items", Tag.TAG_LIST)) {
+                ListTag nbtList = nbtCompound.getList("Items", Tag.TAG_COMPOUND);
+                ItemUtils.onContainerDestroyed(entity, nbtList.stream().map(CompoundTag.class::cast).map(ItemStack::of));
+            }
+        }
     }
 }

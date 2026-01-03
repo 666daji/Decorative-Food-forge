@@ -57,8 +57,8 @@ public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
     }
 
     @Override
-    public boolean isSame(ItemStack stack, BlockEntity blockEntity) {
-        if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity && super.isSame(stack, blockEntity)) {
+    public boolean isSame(ItemStack stack, BlockState state, BlockEntity blockEntity) {
+        if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity && super.isSame(stack, state, blockEntity)) {
             CompoundTag stewStackNbt = suspiciousStewBlockEntity.getStewStack().getTag();
             CompoundTag stackNbt = stack.getTag();
 
@@ -75,7 +75,7 @@ public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
     }
 
     @Override
-    public ItemStack createStack(int count, @Nullable BlockEntity blockEntity) {
+    public ItemStack createStack(int count, BlockState state, @Nullable BlockEntity blockEntity) {
         ItemStack stack = new ItemStack(Items.SUSPICIOUS_STEW, count);
 
         if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity) {
