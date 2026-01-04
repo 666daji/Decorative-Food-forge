@@ -179,17 +179,13 @@ public class FoodBlocks {
      */
     private static Block registerFoodBlock(String id, int maxFood, MapColor mapColor,
                                            SoundType sound, FoodBlock.EnforceAsItem cropType){
-        BlockBehaviour.Properties propsBuilder = DFoodUtils.getFoodBlockSettings()
-                .mapColor(mapColor);
-
-        if (sound != null) {
-            propsBuilder.sound(sound);
-        }
+        SoundType finalSound = (sound == null) ? SoundType.STONE : sound;
 
         Block block = FoodBlock.Builder.create()
                 .maxFood(maxFood)
                 .cItem(cropType)
-                .settings(propsBuilder)
+                .settings(DFoodUtils.getFoodBlockSettings()
+                        .mapColor(mapColor).sound(finalSound))
                 .build();
 
         return registerFoodBlock(id, block);
