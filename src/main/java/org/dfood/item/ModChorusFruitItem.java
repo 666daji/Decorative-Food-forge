@@ -56,21 +56,4 @@ public class ModChorusFruitItem extends ChorusFruitItem implements HaveBlock{
         super.appendHoverText(stack, world, tooltip, context);
         this.getBlock().appendHoverText(stack, world, tooltip, context);
     }
-
-    @Override
-    public boolean canBeDepleted() {
-        return !(this.block instanceof ShulkerBoxBlock);
-    }
-
-    @Override
-    public void onDestroyed(ItemEntity entity) {
-        if (this.block instanceof ShulkerBoxBlock) {
-            ItemStack itemStack = entity.getItem();
-            CompoundTag nbtCompound = HaveBlock.getBlockEntityNbt(itemStack);
-            if (nbtCompound != null && nbtCompound.contains("Items", Tag.TAG_LIST)) {
-                ListTag nbtList = nbtCompound.getList("Items", Tag.TAG_COMPOUND);
-                ItemUtils.onContainerDestroyed(entity, nbtList.stream().map(CompoundTag.class::cast).map(ItemStack::of));
-            }
-        }
-    }
 }

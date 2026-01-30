@@ -3,15 +3,10 @@ package org.dfood.item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.*;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
@@ -26,7 +21,7 @@ public class ModBucketItem extends BucketItem implements HaveBlock {
     private final Block block;
 
     public ModBucketItem(Fluid fluid, Properties properties, Block block) {
-        super(fluid, properties);
+        super(() -> fluid, properties);
         this.block = block;
     }
 
@@ -59,22 +54,5 @@ public class ModBucketItem extends BucketItem implements HaveBlock {
     @Override
     public Block getBlock() {
         return this.block;
-    }
-
-    @Override
-    public boolean canBeDepleted() {
-        return !(this.block instanceof ShulkerBoxBlock);
-    }
-
-    @Override
-    public void onDestroyed(ItemEntity entity) {
-        if (this.block instanceof ShulkerBoxBlock) {
-            ItemStack itemStack = entity.getItem();
-            CompoundTag nbtCompound = HaveBlock.getBlockEntityNbt(itemStack);
-            if (nbtCompound != null && nbtCompound.contains("Items", Tag.TAG_LIST)) {
-                ListTag nbtList = nbtCompound.getList("Items", Tag.TAG_COMPOUND);
-                ItemUtils.onContainerDestroyed(entity, nbtList.stream().map(CompoundTag.class::cast).map(ItemStack::of));
-            }
-        }
     }
 }
