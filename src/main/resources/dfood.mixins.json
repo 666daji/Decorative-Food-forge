@@ -7,6 +7,7 @@
   "mixins": [
     "BlockItemMixin",
     "BlocksMixin",
+    "BucketMixin",
     "FoodToBlockMixin",
     "ServerPlayerInteractionManagerMixin"
   ],

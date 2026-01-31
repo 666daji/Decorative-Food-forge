@@ -5,7 +5,6 @@ import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluids;
 import org.dfood.block.FoodBlocks;
 import org.dfood.item.*;
 import org.dfood.mixin.FoodToBlockMixin;
@@ -99,10 +98,7 @@ public class FoodToBlocks {
         FOOD_MAP.put("bowl", new BlockItem(FoodBlocks.BOWL, new Item.Properties()));
 
         // 桶
-        FOOD_MAP.put("bucket", new ModBucketItem(Fluids.EMPTY, new Item.Properties().stacksTo(16), FoodBlocks.BUCKET));
-        FOOD_MAP.put("water_bucket", null);
         FOOD_MAP.put("milk_bucket", null);
-        FOOD_MAP.put("lava_bucket", null);
 
         // 其他
         FOOD_MAP.put("pumpkin_pie", createItem(FoodBlocks.PUMPKIN_PIE, Foods.PUMPKIN_PIE));
@@ -151,14 +147,6 @@ public class FoodToBlocks {
                 case "milk_bucket":
                     item = new ModMilkBucketItem(
                             new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), FoodBlocks.MILK_BUCKET);
-                    break;
-                case "water_bucket":
-                    item = new ModBucketItem(Fluids.WATER,
-                            new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), FoodBlocks.WATER_BUCKET);
-                    break;
-                case "lava_bucket":
-                    item = new ModBucketItem(Fluids.LAVA,
-                            new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), FoodBlocks.LAVA_BUCKET);
                     break;
 
                 // 药水类

@@ -29,7 +29,7 @@ public class ServerPlayerInteractionManagerMixin {
         BlockState blockState = level.getBlockState(blockPos);
         boolean isModFoodBlock = DFoodUtils.isModFoodBlock(blockState.getBlock());
 
-        if (isModFoodBlock) {
+        if (isModFoodBlock && player.isShiftKeyDown()) {
             InteractionResult actionResult = blockState.use(level, player, hand, hitResult);
             ItemStack itemStack = stack.copy();
             if (actionResult.consumesAction()) {
