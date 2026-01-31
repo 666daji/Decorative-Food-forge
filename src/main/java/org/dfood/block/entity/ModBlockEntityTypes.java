@@ -34,6 +34,13 @@ public class ModBlockEntityTypes {
                             FoodBlocks.SUSPICIOUS_STEW
                     ).build(null));
 
+    public static final RegistryObject<BlockEntityType<EnchantedGoldenAppleBlockEntity>> ENCHANTED_GOLDEN_APPLE =
+            registerBlockEntity("enchanted_golden_apple",
+                    () -> BlockEntityType.Builder.of(
+                            EnchantedGoldenAppleBlockEntity::new,
+                            FoodBlocks.ENCHANTED_GOLDEN_APPLE
+                    ).build(null));
+
     private static <T extends BlockEntityType<?>> RegistryObject<T> registerBlockEntity(
             String name, Supplier<T> supplier) {
         return BLOCK_ENTITIES.register(name, supplier);

@@ -66,6 +66,7 @@ public class FoodToBlocks {
         FOOD_MAP.put("golden_apple", createItem(FoodBlocks.GOLDEN_APPLE, Foods.GOLDEN_APPLE));
         FOOD_MAP.put("golden_carrot", createItem(FoodBlocks.GOLDEN_CARROT, Foods.GOLDEN_CARROT));
         FOOD_MAP.put("glistering_melon_slice", new BlockItem(FoodBlocks.GLISTERING_MELON_SLICE, new Item.Properties()));
+        FOOD_MAP.put("enchanted_golden_apple", new ModEnchantedGoldenAppleItem(new Item.Properties().rarity(Rarity.EPIC).food(Foods.ENCHANTED_GOLDEN_APPLE), FoodBlocks.ENCHANTED_GOLDEN_APPLE));
 
         // 生熟肉类
         FOOD_MAP.put("chicken", createItem(FoodBlocks.CHICKEN, Foods.CHICKEN));

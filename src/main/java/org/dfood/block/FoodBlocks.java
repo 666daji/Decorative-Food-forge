@@ -55,7 +55,12 @@ public class FoodBlocks {
     public static final Block GOLDEN_CARROT = registerFoodBlock("golden_carrot", 5,
             MapColor.GOLD, SoundType.CANDLE);
     public static final Block GLISTERING_MELON_SLICE = registerFoodBlock("glistering_melon_slice", 5,
-            MapColor.COLOR_LIGHT_BLUE, null);
+            MapColor.GOLD, null);
+    public static final Block ENCHANTED_GOLDEN_APPLE = registerFoodBlock("enchanted_golden_apple",
+            EnchantedGoldenAppleBlock.Builder.create()
+                    .maxFood(5)
+                    .settings(DFoodUtils.getFoodBlockSettings().mapColor(MapColor.GOLD))
+                    .build());
 
     // 生熟肉类
     public static final Block CHICKEN = registerFoodBlock("chicken", 1,

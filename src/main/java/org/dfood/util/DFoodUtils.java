@@ -50,6 +50,20 @@ public class DFoodUtils {
     }
 
     /**
+     * 获取食物方块的堆叠数量。
+     *
+     * @param state 原食物方块状态
+     * @return 对应的堆叠数量，如果不是有效的食物方块则返回0
+     */
+    public static int getFoodBlockCount(BlockState state) {
+        if (state.getBlock() instanceof FoodBlock foodBlock) {
+            return state.getValue(foodBlock.NUMBER_OF_FOOD);
+        }
+
+        return 0;
+    }
+
+    /**
      * 检查方块是否强制定义了asItem方法的返回值
      * @param state 要检查的方块状态
      * @return 方块是否强制定义了asItem方法的返回值

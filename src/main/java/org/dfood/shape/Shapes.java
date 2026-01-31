@@ -60,6 +60,9 @@ public class Shapes {
         shapeMap.put("minecraft:glistering_melon_slice", new int[][]{
                 {1, 1, 11}, {2, 3, 12}, {4, 5, 2}
         });
+        shapeMap.put("minecraft:enchanted_golden_apple", new int[][]{
+                {1, 1, 11}, {2, 5, 8}
+        });
         // 生熟肉类
         shapeMap.put("minecraft:chicken", new int[][]{
                 {1, 1, 12}
