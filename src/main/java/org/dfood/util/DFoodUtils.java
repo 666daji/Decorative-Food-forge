@@ -1,11 +1,13 @@
 package org.dfood.util;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import org.dfood.ThreedFood;
 import org.dfood.block.FoodBlock;
 import org.dfood.item.DoubleBlockItem;
 import org.dfood.item.HaveBlock;
@@ -101,5 +103,10 @@ public class DFoodUtils {
                 .noOcclusion()
                 .isValidSpawn((state, getter, pos, type) -> false)
                 .pushReaction(PushReaction.DESTROY);
+    }
+
+    // Forge: Create Mod Identifier
+    public static ResourceLocation createModId(String string) {
+        return new ResourceLocation(ThreedFood.MOD_ID, string);
     }
 }

@@ -15,21 +15,23 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.dfood.block.entity.ModBlockEntityTypes;
 import org.dfood.client.EnchantedGoldenAppleBlockEntityRenderer;
+import org.dfood.sound.ModSounds;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(Threedfood.MOD_ID)
-public class Threedfood {
+@Mod(ThreedFood.MOD_ID)
+public class ThreedFood {
 
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "dfood";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Threedfood() {
+    public ThreedFood() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModBlockEntityTypes.register(modEventBus);
+        ModSounds.registerAll(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

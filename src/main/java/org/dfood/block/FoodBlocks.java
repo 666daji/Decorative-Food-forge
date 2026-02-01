@@ -116,16 +116,20 @@ public class FoodBlocks {
 
     // 桶
     public static final Block BUCKET = registerFoodBlock("bucket", 1,
-            MapColor.SNOW, ModSoundGroups.BUCKET);
+            MapColor.SNOW, ModSoundGroups.BUCKET, EnforceAsItems.BUCKET);
     public static final Block WATER_BUCKET = registerFoodBlock("water_bucket", 1,
-            MapColor.COLOR_BLUE, ModSoundGroups.WATER_BUCKET);
+            MapColor.COLOR_BLUE, ModSoundGroups.WATER_BUCKET, EnforceAsItems.WATER_BUCKET);
     public static final Block MILK_BUCKET = registerFoodBlock("milk_bucket", 1,
             MapColor.SNOW, ModSoundGroups.WATER_BUCKET);
-    public static final Block LAVA_BUCKET = registerFoodBlock("lava_bucket", 1,
-            DFoodUtils.getFoodBlockSettings()
-                    .sound(ModSoundGroups.LAVA_BUCKET)
-                    .mapColor(MapColor.COLOR_ORANGE)
-                    .lightLevel(state -> 15));
+    public static final Block LAVA_BUCKET = registerFoodBlock("lava_bucket",
+            FoodBlock.Builder.create()
+                    .maxFood(1)
+                    .settings(DFoodUtils.getFoodBlockSettings()
+                            .sound(ModSoundGroups.LAVA_BUCKET)
+                            .mapColor(MapColor.COLOR_ORANGE)
+                            .lightLevel(state -> 15))
+                    .cItem(EnforceAsItems.LAVA_BUCKET)
+                    .build());
 
     // 其他
     public static final Block PUMPKIN_PIE = registerFoodBlock("pumpkin_pie", 1,
@@ -152,7 +156,7 @@ public class FoodBlocks {
                             .sound(ModSoundGroups.POTION))
                     .build());
     public static final Block GLASS_BOTTLE = registerFoodBlock("glass_bottle", 3,
-            MapColor.SNOW, ModSoundGroups.POTION);
+            MapColor.SNOW, ModSoundGroups.GLASS_BOTTLE);
     public static final Block HONEY_BOTTLE = registerFoodBlock("honey_bottle", 3,
             MapColor.COLOR_ORANGE, ModSoundGroups.POTION);
 

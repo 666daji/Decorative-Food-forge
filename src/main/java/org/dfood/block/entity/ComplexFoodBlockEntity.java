@@ -1,6 +1,7 @@
 package org.dfood.block.entity;
 
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -8,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.core.BlockPos;
 import org.dfood.block.ComplexFoodBlock;
+import org.dfood.util.DFoodUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -161,6 +163,24 @@ public class ComplexFoodBlockEntity extends BlockEntity {
      */
     public List<CompoundTag> getAllNbt() {
         return new ArrayList<>(nbtStack);
+    }
+
+    /**
+     * 获取用于预览的所有存储物品堆栈，每个物品堆栈数量为1.
+     *
+     * @return 添加的所有原物品堆栈
+     */
+    public List<ItemStack> getAllStack() {
+        int count = DFoodUtils.getFoodBlockCount(getBlockState());
+        List<ItemStack> stacks = new ArrayList<>(count);
+
+        for (int i = 0; i < count; i++) {
+            ItemStack stack = new ItemStack(getBlockState().getBlock().asItem());
+            stack.setTag(getNbtAt(i));
+            stacks.add(stack);
+        }
+
+        return stacks;
     }
 
     /**

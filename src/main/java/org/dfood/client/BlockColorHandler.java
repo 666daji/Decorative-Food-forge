@@ -5,11 +5,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.dfood.Threedfood;
+import org.dfood.ThreedFood;
 import org.dfood.block.FoodBlocks;
 import org.dfood.block.entity.PotionBlockEntity;
 
-@Mod.EventBusSubscriber(modid = Threedfood.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = ThreedFood.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class BlockColorHandler {
 
     @SubscribeEvent

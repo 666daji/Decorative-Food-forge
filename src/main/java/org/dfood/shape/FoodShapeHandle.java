@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.dfood.Threedfood;
+import org.dfood.ThreedFood;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -19,7 +19,7 @@ import java.util.Map;
  * @see ShapeConvertible
  */
 public class FoodShapeHandle {
-    private static final Logger LOGGER = Threedfood.LOGGER;
+    private static final Logger LOGGER = ThreedFood.LOGGER;
 
     /**
      * 表示食物方块体素的映射。

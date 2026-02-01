@@ -5,14 +5,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.dfood.Threedfood;
+import org.dfood.ThreedFood;
 import org.dfood.block.FoodBlocks;
 
 import java.util.function.Supplier;
 
 public class ModBlockEntityTypes {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Threedfood.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ThreedFood.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<ComplexFoodBlockEntity>> COMPLEX_FOOD =
             registerBlockEntity("complex_food",
