@@ -1,6 +1,7 @@
 package org.dfood.mixin;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -16,12 +17,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.dfood.block.FoodBlocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Objects;
 
 @Mixin(Item.class)
 public class BucketMixin {
@@ -47,6 +51,12 @@ public class BucketMixin {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
+        ItemStack stack = context.getItemInHand();
+
+        // 只处理原版的桶
+        if (!Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).getNamespace().equals(ResourceLocation.DEFAULT_NAMESPACE)) {
+            return InteractionResult.FAIL;
+        }
 
         // 根据流体类型获取对应的方块状态
         BlockState blockState = dFood$getBucketBlockStateForFluid(fluid, new BlockPlaceContext(context));

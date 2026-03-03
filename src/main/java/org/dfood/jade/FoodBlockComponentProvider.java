@@ -9,6 +9,7 @@ import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
 public class FoodBlockComponentProvider implements IBlockComponentProvider {
+    public static final ResourceLocation ID = DFoodUtils.createModId("food_block");
 
     @Override
     public void appendTooltip(ITooltip iTooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
@@ -19,6 +20,6 @@ public class FoodBlockComponentProvider implements IBlockComponentProvider {
 
     @Override
     public ResourceLocation getUid() {
-        return DFoodUtils.createModId("food_block");
+        return ID;
     }
 }
