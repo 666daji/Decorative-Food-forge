@@ -33,7 +33,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.dfood.item.DoubleBlockItem;
 import org.dfood.item.HaveBlock;
 import org.dfood.shape.FoodShapeHandle;
-import org.dfood.tag.ModTags;
 import org.dfood.util.DFoodUtils;
 import org.dfood.util.IntegerPropertyManager;
 import org.jetbrains.annotations.NotNull;
@@ -359,7 +358,7 @@ public class FoodBlock extends Block {
     public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         BlockPos downPos = pos.below();
         BlockState checkState = world.getBlockState(downPos);
-        return !checkState.is(ModTags.FOOD_PLACE) && !DFoodUtils.isModFoodBlock(checkState.getBlock());
+        return !checkState.canBeReplaced() && !DFoodUtils.isModFoodBlock(checkState.getBlock());
     }
 
     /**
