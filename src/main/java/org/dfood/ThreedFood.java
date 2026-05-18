@@ -17,23 +17,22 @@ import org.slf4j.LoggerFactory;
 @Mod(ThreedFood.MOD_ID)
 public class ThreedFood {
     public static final String MOD_ID = "dfood";
-    public static final Logger LOGGER = LoggerFactory.getLogger("Tw`s Decorative Food");
+    public static final Logger LOGGER = LoggerFactory.getLogger("TW`s Decorative Food");
 
     public ThreedFood() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModBlockEntityTypes.register(modEventBus);
         ModSounds.registerAll(modEventBus);
-
-        modEventBus.addListener(this::commonSetup);
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("Hello forge world!");
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
+        @SubscribeEvent
+        public void init(final FMLCommonSetupEvent event) {
+            LOGGER.info("Hello forge world!");
+        }
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {

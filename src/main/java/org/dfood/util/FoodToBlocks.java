@@ -49,11 +49,13 @@ public class FoodToBlocks {
         FOOD_MAP.put("apple", createItem(FoodBlocks.APPLE, Foods.APPLE));
         FOOD_MAP.put("melon_slice", createItem(FoodBlocks.MELON_SLICE, Foods.MELON_SLICE));
         FOOD_MAP.put("bread", createItem(FoodBlocks.BREAD, Foods.BREAD));
+        FOOD_MAP.put("dried_kelp", createItem(FoodBlocks.DRIED_KELP, Foods  .DRIED_KELP));
 
         // 蔬菜类
         FOOD_MAP.put("beetroot", createItem(FoodBlocks.BEETROOT, Foods.BEETROOT));
         FOOD_MAP.put("potato", new DoubleBlockItem(Blocks.POTATOES,
                 new Item.Properties().food(Foods.POTATO), FoodBlocks.POTATO));
+        FOOD_MAP.put("poisonous_potato", createItem(FoodBlocks.POISONOUS_POTATO, Foods.POISONOUS_POTATO));
         FOOD_MAP.put("baked_potato", createItem(FoodBlocks.BAKED_POTATO, Foods.BAKED_POTATO));
         FOOD_MAP.put("carrot", new DoubleBlockItem(Blocks.CARROTS,
                 new Item.Properties().food(Foods.CARROT), FoodBlocks.CARROT));
@@ -101,6 +103,9 @@ public class FoodToBlocks {
 
         // 桶
         FOOD_MAP.put("milk_bucket", null);
+
+        // 怪物
+        FOOD_MAP.put("spider_eye", createItem(FoodBlocks.SPIDER_EYE, Foods.SPIDER_EYE));
 
         // 其他
         FOOD_MAP.put("pumpkin_pie", createItem(FoodBlocks.PUMPKIN_PIE, Foods.PUMPKIN_PIE));

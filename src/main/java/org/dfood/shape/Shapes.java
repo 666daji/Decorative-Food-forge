@@ -31,11 +31,17 @@ public class Shapes {
         shapeMap.put("minecraft:bread", new int[][]{
                 {1, 2, 3}, {3, 4, 2}, {5, 5, 1}
         });
+        shapeMap.put("minecraft:dried_kelp", new int[][]{
+                {1, 4, 4}
+        });
         // 蔬菜类
         shapeMap.put("minecraft:beetroot", new int[][]{
                 {1, 1, 11}, {2, 5, 12}
         });
         shapeMap.put("minecraft:potato", new int[][]{
+                {1, 1, 11}, {2, 4, 2}, {5, 5, 1}
+        });
+        shapeMap.put("minecraft:poisonous_potato", new int[][]{
                 {1, 1, 11}, {2, 4, 2}, {5, 5, 1}
         });
         shapeMap.put("minecraft:baked_potato", new int[][]{
@@ -54,14 +60,14 @@ public class Shapes {
         shapeMap.put("minecraft:golden_apple", new int[][]{
                 {1, 1, 11}, {2, 5, 8}
         });
+        shapeMap.put("minecraft:enchanted_golden_apple", new int[][]{
+                {1, 1, 11}, {2, 5, 8}
+        });
         shapeMap.put("minecraft:golden_carrot", new int[][]{
                 {1, 3, 2}, {4, 5, 1}
         });
         shapeMap.put("minecraft:glistering_melon_slice", new int[][]{
                 {1, 1, 11}, {2, 3, 12}, {4, 5, 2}
-        });
-        shapeMap.put("minecraft:enchanted_golden_apple", new int[][]{
-                {1, 1, 11}, {2, 5, 8}
         });
         // 生熟肉类
         shapeMap.put("minecraft:chicken", new int[][]{
@@ -141,6 +147,10 @@ public class Shapes {
         });
         shapeMap.put("minecraft:lava_bucket", new int[][]{
                 {1, 1, 8}
+        });
+        // 怪物
+        shapeMap.put("minecraft:spider_eye", new int[][]{
+                {1, 1, 9}, {2, 4, 10}, {5, 6, 3}
         });
         // 其他
         shapeMap.put("minecraft:pumpkin_pie", new int[][]{

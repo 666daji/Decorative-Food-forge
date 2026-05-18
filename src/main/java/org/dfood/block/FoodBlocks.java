@@ -18,7 +18,7 @@ public class FoodBlocks {
     public static final Map<String, Block> FOOD_BLOCK_REGISTRY = new HashMap<>();
 
     // 零食
-    public static final Block COOKIE = registerFoodBlock("cookie", 10,
+    public static final Block COOKIE = registerFoodBlock("cookie", 7,
             MapColor.TERRACOTTA_YELLOW, SoundType.STONE);
     public static final Block APPLE = registerFoodBlock("apple", 5,
             MapColor.COLOR_RED, SoundType.STONE);
@@ -26,12 +26,16 @@ public class FoodBlocks {
             MapColor.COLOR_LIGHT_GREEN, SoundType.STONE);
     public static final Block BREAD = registerFoodBlock("bread", 5,
             MapColor.TERRACOTTA_YELLOW, ModSoundGroups.BREAD);
+    public static final Block DRIED_KELP = registerFoodBlock("dried_kelp", 4,
+            MapColor.COLOR_GREEN, SoundType.GRASS);
 
     // 蔬菜类
     public static final Block BEETROOT = registerFoodBlock("beetroot", 5,
             MapColor.COLOR_RED, SoundType.CANDLE);
     public static final Block POTATO = registerFoodBlock("potato", 5,
             MapColor.GOLD, SoundType.CANDLE, EnforceAsItems.POTATO);
+    public static final Block POISONOUS_POTATO = registerFoodBlock("poisonous_potato", 5,
+            MapColor.GOLD, SoundType.CANDLE);
     public static final Block BAKED_POTATO = registerFoodBlock("baked_potato", 5,
             MapColor.GOLD, SoundType.CANDLE);
     public static final Block CARROT = registerFoodBlock("carrot", 5,
@@ -132,6 +136,10 @@ public class FoodBlocks {
                             .lightLevel(state -> 15))
                     .cItem(EnforceAsItems.LAVA_BUCKET)
                     .build());
+
+    // 怪物
+    public static final Block SPIDER_EYE = registerFoodBlock("spider_eye", 6,
+            MapColor.COLOR_RED, ModSoundGroups.MEAT);
 
     // 其他
     public static final Block PUMPKIN_PIE = registerFoodBlock("pumpkin_pie", 1,
