@@ -1,16 +1,22 @@
 package org.dfood.block.entity;
 
-import net.minecraft.nbt.Tag;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import com.mojang.serialization.DataResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import org.dfood.block.ComplexFoodBlock;
 import org.dfood.util.DFoodUtils;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +30,9 @@ import java.util.Stack;
  * @see ComplexFoodBlock
  */
 public class ComplexFoodBlockEntity extends BlockEntity {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComplexFoodBlockEntity.class);
 
-    /**
-     * 存储 NBT 数据的栈结构，底层使用 {@link ListTag} 便于序列化。
-     */
-    protected final Stack<CompoundTag> nbtStack = new Stack<>();
-
-    /**
-     * 最大存储容量，由对应的 {@link ComplexFoodBlock} 定义。
-     */
+    protected final Stack<DataComponentPatch> patchStack = new Stack<>();
     protected int maxCapacity;
 
     public ComplexFoodBlockEntity(BlockPos pos, BlockState state) {
@@ -48,22 +48,14 @@ public class ComplexFoodBlockEntity extends BlockEntity {
         }
     }
 
-    /**
-     * 将物品堆栈的 NBT 数据压入栈中。
-     *
-     * @param nbt 要保存的 NBT 数据，若为 {@code null} 则保存空的 {@link CompoundTag}
-     * @return {@code true} 如果成功压入，{@code false} 如果栈已满
-     */
-    public boolean pushNbt(@Nullable CompoundTag nbt) {
-        if (nbtStack.size() >= maxCapacity) {
+    public boolean pushPatch(@Nullable DataComponentPatch patch) {
+        if (patchStack.size() >= maxCapacity) {
             return false;
         }
-
-        if (nbt == null) {
-            nbt = new CompoundTag();
+        if (patch == null) {
+            patch = DataComponentPatch.EMPTY;
         }
-
-        nbtStack.push(nbt);
+        patchStack.push(patch);
         setChanged();
         return true;
     }
@@ -74,12 +66,11 @@ public class ComplexFoodBlockEntity extends BlockEntity {
      * @return 栈顶的 NBT 数据，若栈为空则返回 {@code null}
      */
     @Nullable
-    public CompoundTag popNbt() {
-        if (nbtStack.isEmpty()) {
+    public DataComponentPatch popPatch() {
+        if (patchStack.isEmpty()) {
             return null;
         }
-
-        CompoundTag popped = nbtStack.pop();
+        DataComponentPatch popped = patchStack.pop();
         setChanged();
         return popped;
     }
@@ -90,36 +81,30 @@ public class ComplexFoodBlockEntity extends BlockEntity {
      * @return 栈顶的 NBT 数据，若栈为空则返回 {@code null}
      */
     @Nullable
-    public CompoundTag peekNbt() {
-        return nbtStack.isEmpty() ? null : nbtStack.peek();
+    public DataComponentPatch peekPatch() {
+        return patchStack.isEmpty() ? null : patchStack.peek();
     }
 
-    /**
-     * 获取当前栈中 NBT 数据的数量。
-     */
-    public int getNbtCount() {
-        return nbtStack.size();
+    public int getPatchCount() {
+        return patchStack.size();
     }
 
     /**
      * 检查栈是否已满。
      */
     public boolean isFull() {
-        return nbtStack.size() >= maxCapacity;
+        return patchStack.size() >= maxCapacity;
     }
 
     /**
      * 检查栈是否为空。
      */
     public boolean isEmpty() {
-        return nbtStack.isEmpty();
+        return patchStack.isEmpty();
     }
 
-    /**
-     * 清空栈中的所有 NBT 数据。
-     */
-    public void clearNbt() {
-        nbtStack.clear();
+    public void clearPatches() {
+        patchStack.clear();
         setChanged();
     }
 
@@ -127,13 +112,17 @@ public class ComplexFoodBlockEntity extends BlockEntity {
      * 序列化方块实体数据到 NBT。
      */
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.saveAdditional(nbt, registries);
 
-        ListTag nbtList = new ListTag();
-        nbtList.addAll(nbtStack);
+        ListTag patchList = new ListTag();
+        for (DataComponentPatch patch : patchStack) {
+            DataResult<Tag> result = DataComponentPatch.CODEC.encodeStart(NbtOps.INSTANCE, patch);
+            result.result().ifPresent(patchList::add);
+            result.error().ifPresent(error -> LOGGER.error("Failed to encode DataComponentPatch: {}", error.message()));
+        }
 
-        nbt.put("NbtStack", nbtList);
+        nbt.put("PatchStack", patchList);
         nbt.putInt("MaxCapacity", maxCapacity);
     }
 
@@ -141,15 +130,17 @@ public class ComplexFoodBlockEntity extends BlockEntity {
      * 从 NBT 反序列化方块实体数据。
      */
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
+    public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
 
-        nbtStack.clear();
+        patchStack.clear();
 
-        if (nbt.contains("NbtStack", Tag.TAG_LIST)) {
-            ListTag nbtList = nbt.getList("NbtStack", Tag.TAG_COMPOUND);
-            for (int i = 0; i < nbtList.size(); i++) {
-                nbtStack.push(nbtList.getCompound(i));
+        if (nbt.contains("PatchStack", Tag.TAG_LIST)) {
+            ListTag patchList = nbt.getList("PatchStack", Tag.TAG_COMPOUND);
+            for (int i = 0; i < patchList.size(); i++) {
+                DataResult<DataComponentPatch> result = DataComponentPatch.CODEC.parse(NbtOps.INSTANCE, patchList.getCompound(i));
+                result.result().ifPresent(patchStack::push);
+                result.error().ifPresent(error -> LOGGER.error("Failed to parse DataComponentPatch: {}", error.message()));
             }
         }
 
@@ -158,11 +149,8 @@ public class ComplexFoodBlockEntity extends BlockEntity {
         }
     }
 
-    /**
-     * 获取栈中所有 NBT 数据的副本（从栈底到栈顶）。
-     */
-    public List<CompoundTag> getAllNbt() {
-        return new ArrayList<>(nbtStack);
+    public List<DataComponentPatch> getAllPatches() {
+        return new ArrayList<>(patchStack);
     }
 
     /**
@@ -176,7 +164,10 @@ public class ComplexFoodBlockEntity extends BlockEntity {
 
         for (int i = 0; i < count; i++) {
             ItemStack stack = new ItemStack(getBlockState().getBlock().asItem());
-            stack.setTag(getNbtAt(i));
+            DataComponentPatch patch = getPatchAt(i);
+            if (patch != null && !patch.equals(DataComponentPatch.EMPTY)) {
+                stack.applyComponents(patch);
+            }
             stacks.add(stack);
         }
 
@@ -190,10 +181,10 @@ public class ComplexFoodBlockEntity extends BlockEntity {
      * @return 指定位置的 NBT 数据，若索引越界则返回 {@code null}
      */
     @Nullable
-    public CompoundTag getNbtAt(int index) {
-        if (index < 0 || index >= nbtStack.size()) {
+    public DataComponentPatch getPatchAt(int index) {
+        if (index < 0 || index >= patchStack.size()) {
             return null;
         }
-        return nbtStack.get(index);
+        return patchStack.get(index);
     }
 }

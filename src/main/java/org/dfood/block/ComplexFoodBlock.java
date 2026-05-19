@@ -1,17 +1,17 @@
 package org.dfood.block;
 
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.Level;
 import org.dfood.block.entity.ComplexFoodBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,10 +28,10 @@ import java.util.List;
  * @see ComplexFoodBlockEntity
  */
 public class ComplexFoodBlock extends FoodBlock implements EntityBlock {
-    protected ComplexFoodBlock(Properties properties, int maxFood, boolean isFood,
+    protected ComplexFoodBlock(Properties settings, int maxFood, boolean isFood,
                                @Nullable VoxelShape simpleShape, boolean useItemTranslationKey,
                                @Nullable EnforceAsItem cItem) {
-        super(properties, maxFood, isFood, simpleShape, useItemTranslationKey, cItem);
+        super(settings, maxFood, isFood, simpleShape, useItemTranslationKey, cItem);
     }
 
     public static class Builder extends FoodBlockBuilder<ComplexFoodBlock, Builder> {
@@ -81,10 +81,9 @@ public class ComplexFoodBlock extends FoodBlock implements EntityBlock {
     protected boolean tryAdd(BlockState state, Level world, BlockPos pos, Player player,
                              ItemStack handStack, @Nullable BlockEntity blockEntity) {
         if (blockEntity instanceof ComplexFoodBlockEntity complexFoodBlockEntity) {
-            CompoundTag stackNbt = handStack.hasTag() ? handStack.getTag().copy() : new CompoundTag();
-            complexFoodBlockEntity.pushNbt(stackNbt);
+            DataComponentPatch patch = handStack.getComponentsPatch();
+            complexFoodBlockEntity.pushPatch(patch);
         }
-
         return super.tryAdd(state, world, pos, player, handStack, blockEntity);
     }
 
@@ -106,9 +105,9 @@ public class ComplexFoodBlock extends FoodBlock implements EntityBlock {
         ItemStack stack = new ItemStack(this.asItem(), count);
 
         if (blockEntity instanceof ComplexFoodBlockEntity complexFoodBlockEntity) {
-            CompoundTag storedNbt = complexFoodBlockEntity.popNbt();
-            if (storedNbt != null && !storedNbt.isEmpty()) {
-                stack.setTag(storedNbt);
+            DataComponentPatch patch = complexFoodBlockEntity.popPatch();
+            if (patch != null && !patch.equals(DataComponentPatch.EMPTY)) {
+                stack.applyComponents(patch);
             }
         }
 
@@ -122,8 +121,8 @@ public class ComplexFoodBlock extends FoodBlock implements EntityBlock {
 
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof ComplexFoodBlockEntity complexFoodBlockEntity) {
-            CompoundTag stackNbt = itemStack.hasTag() ? itemStack.getTag().copy() : new CompoundTag();
-            complexFoodBlockEntity.pushNbt(stackNbt);
+            DataComponentPatch patch = itemStack.getComponentsPatch();
+            complexFoodBlockEntity.pushPatch(patch);
             complexFoodBlockEntity.setChanged();
         }
     }

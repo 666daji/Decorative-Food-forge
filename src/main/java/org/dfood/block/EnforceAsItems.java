@@ -15,6 +15,6 @@ public class EnforceAsItems {
     public static final FoodBlock.EnforceAsItem LAVA_BUCKET = createAsItem("lava_bucket");
 
     private static FoodBlock.EnforceAsItem createAsItem(String item) {
-        return () -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
+        return () -> ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(item));
     }
 }

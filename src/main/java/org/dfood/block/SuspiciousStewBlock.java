@@ -1,25 +1,27 @@
 package org.dfood.block;
 
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import org.dfood.block.entity.SuspiciousStewBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
-    protected SuspiciousStewBlock(Properties properties, int maxFood) {
-        super(properties, maxFood, true, null, true, null);
+
+    public SuspiciousStewBlock(Properties settings, int maxFood) {
+        super(settings, maxFood, true, null, true, null);
     }
 
     public static class Builder extends FoodBlockBuilder<SuspiciousStewBlock, Builder> {
@@ -31,9 +33,7 @@ public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
 
         @Override
         protected SuspiciousStewBlock createBlock() {
-            return new SuspiciousStewBlock(
-                    this.settings, this.maxFood
-            );
+            return new SuspiciousStewBlock(this.settings, this.maxFood);
         }
     }
 
@@ -43,33 +43,31 @@ public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
     }
 
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state,
+                            @Nullable LivingEntity placer, ItemStack itemStack) {
         super.setPlacedBy(world, pos, state, placer, itemStack);
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity) {
-                CompoundTag stackNbt = itemStack.getTag();
-                if (stackNbt != null) {
-                    suspiciousStewBlockEntity.readCustomDataFromItem(stackNbt);
-                }
+            if (blockEntity instanceof SuspiciousStewBlockEntity stewEntity) {
+                SuspiciousStewEffects stewEffects = itemStack.get(DataComponents.SUSPICIOUS_STEW_EFFECTS);
+                stewEntity.readCustomDataFromItem(stewEffects);
             }
         }
     }
 
     @Override
-    public boolean isSame(ItemStack stack, BlockState state, BlockEntity blockEntity) {
-        if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity && super.isSame(stack, state, blockEntity)) {
-            CompoundTag stewStackNbt = suspiciousStewBlockEntity.getStewStack().getTag();
-            CompoundTag stackNbt = stack.getTag();
+    public boolean isSame(ItemStack stack, BlockState state, @Nullable BlockEntity blockEntity) {
+        if (blockEntity instanceof SuspiciousStewBlockEntity stewEntity && super.isSame(stack, state, blockEntity)) {
+            SuspiciousStewEffects blockEffects = stewEntity.createStewEffectsComponent();
+            SuspiciousStewEffects stackEffects = stack.get(DataComponents.SUSPICIOUS_STEW_EFFECTS);
 
-            // 检查两个NBT是否都包含效果列表
-            if (stackNbt != null && stewStackNbt != null &&
-                    stackNbt.contains("Effects") && stewStackNbt.contains("Effects")) {
-                // 比较效果列表是否相同
-                return Objects.equals(stewStackNbt.get("Effects"), stackNbt.get("Effects"));
+            if (blockEffects.equals(SuspiciousStewEffects.EMPTY) && stackEffects == null) {
+                return true;
             }
-            // 如果其中一个没有效果，则认为它们不匹配
-            return false;
+            if (blockEffects.equals(SuspiciousStewEffects.EMPTY) || stackEffects == null) {
+                return false;
+            }
+            return blockEffects.equals(stackEffects);
         }
         return false;
     }
@@ -78,12 +76,12 @@ public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
     public ItemStack createStack(int count, BlockState state, @Nullable BlockEntity blockEntity) {
         ItemStack stack = new ItemStack(Items.SUSPICIOUS_STEW, count);
 
-        if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity) {
-            // 将方块实体中的效果写入物品NBT
-            CompoundTag nbt = stack.getOrCreateTag();
-            suspiciousStewBlockEntity.writeCustomDataToItem(nbt);
+        if (blockEntity instanceof SuspiciousStewBlockEntity stewEntity) {
+            SuspiciousStewEffects component = stewEntity.createStewEffectsComponent();
+            if (!component.equals(SuspiciousStewEffects.EMPTY)) {
+                stack.set(DataComponents.SUSPICIOUS_STEW_EFFECTS, component);
+            }
         }
-
         return stack;
     }
 
@@ -91,11 +89,10 @@ public class SuspiciousStewBlock extends FoodBlock implements EntityBlock {
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
 
-        if (blockEntity instanceof SuspiciousStewBlockEntity suspiciousStewBlockEntity) {
+        if (blockEntity instanceof SuspiciousStewBlockEntity stewEntity) {
             int count = state.getValue(NUMBER_OF_FOOD);
-            ItemStack baseStack = suspiciousStewBlockEntity.getStewStack();
-            List<ItemStack> drops = new java.util.ArrayList<>();
-
+            ItemStack baseStack = stewEntity.getStewStack();
+            List<ItemStack> drops = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 drops.add(baseStack.copy());
             }

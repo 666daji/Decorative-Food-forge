@@ -45,71 +45,67 @@ public class FoodToBlocks {
 
     static {
         // 零食类
-        FOOD_MAP.put("cookie", createItem(FoodBlocks.COOKIE, Foods.COOKIE));
-        FOOD_MAP.put("apple", createItem(FoodBlocks.APPLE, Foods.APPLE));
-        FOOD_MAP.put("melon_slice", createItem(FoodBlocks.MELON_SLICE, Foods.MELON_SLICE));
-        FOOD_MAP.put("bread", createItem(FoodBlocks.BREAD, Foods.BREAD));
-        FOOD_MAP.put("dried_kelp", createItem(FoodBlocks.DRIED_KELP, Foods  .DRIED_KELP));
+        FOOD_MAP.put("cookie", createItem(FoodBlocks.COOKIE, ModFoodComponents.COOKIE));
+        FOOD_MAP.put("apple", createItem(FoodBlocks.APPLE, ModFoodComponents.APPLE));
+        FOOD_MAP.put("melon_slice", createItem(FoodBlocks.MELON_SLICE, ModFoodComponents.MELON_SLICE));
+        FOOD_MAP.put("bread", createItem(FoodBlocks.BREAD, ModFoodComponents.BREAD));
+        FOOD_MAP.put("dried_kelp", createItem(FoodBlocks.DRIED_KELP, ModFoodComponents  .DRIED_KELP));
 
         // 蔬菜类
-        FOOD_MAP.put("beetroot", createItem(FoodBlocks.BEETROOT, Foods.BEETROOT));
+        FOOD_MAP.put("beetroot", createItem(FoodBlocks.BEETROOT, ModFoodComponents.BEETROOT));
         FOOD_MAP.put("potato", new DoubleBlockItem(Blocks.POTATOES,
-                new Item.Properties().food(Foods.POTATO), FoodBlocks.POTATO));
-        FOOD_MAP.put("poisonous_potato", createItem(FoodBlocks.POISONOUS_POTATO, Foods.POISONOUS_POTATO));
-        FOOD_MAP.put("baked_potato", createItem(FoodBlocks.BAKED_POTATO, Foods.BAKED_POTATO));
+                new Item.Properties().food(ModFoodComponents.POTATO), FoodBlocks.POTATO));
+        FOOD_MAP.put("poisonous_potato", createItem(FoodBlocks.POISONOUS_POTATO, ModFoodComponents.POISONOUS_POTATO));
+        FOOD_MAP.put("baked_potato", createItem(FoodBlocks.BAKED_POTATO, ModFoodComponents.BAKED_POTATO));
         FOOD_MAP.put("carrot", new DoubleBlockItem(Blocks.CARROTS,
-                new Item.Properties().food(Foods.CARROT), FoodBlocks.CARROT));
+                new Item.Properties().food(ModFoodComponents.CARROT), FoodBlocks.CARROT));
         FOOD_MAP.put("sweet_berries", new DoubleBlockItem(Blocks.SWEET_BERRY_BUSH,
-                new Item.Properties().food(Foods.SWEET_BERRIES), FoodBlocks.SWEET_BERRIES));
+                new Item.Properties().food(ModFoodComponents.SWEET_BERRIES), FoodBlocks.SWEET_BERRIES));
         FOOD_MAP.put("glow_berries", new DoubleBlockItem(Blocks.CAVE_VINES,
-                new Item.Properties().food(Foods.GLOW_BERRIES), FoodBlocks.GLOW_BERRIES));
+                new Item.Properties().food(ModFoodComponents.GLOW_BERRIES), FoodBlocks.GLOW_BERRIES));
 
         // 金制食物
-        FOOD_MAP.put("golden_apple", createItem(FoodBlocks.GOLDEN_APPLE, Foods.GOLDEN_APPLE));
-        FOOD_MAP.put("golden_carrot", createItem(FoodBlocks.GOLDEN_CARROT, Foods.GOLDEN_CARROT));
+        FOOD_MAP.put("golden_apple", createItem(FoodBlocks.GOLDEN_APPLE, ModFoodComponents.GOLDEN_APPLE));
+        FOOD_MAP.put("golden_carrot", createItem(FoodBlocks.GOLDEN_CARROT, ModFoodComponents.GOLDEN_CARROT));
         FOOD_MAP.put("glistering_melon_slice", new BlockItem(FoodBlocks.GLISTERING_MELON_SLICE, new Item.Properties()));
-        FOOD_MAP.put("enchanted_golden_apple", new ModEnchantedGoldenAppleItem(new Item.Properties().rarity(Rarity.EPIC).food(Foods.ENCHANTED_GOLDEN_APPLE), FoodBlocks.ENCHANTED_GOLDEN_APPLE));
+        FOOD_MAP.put("enchanted_golden_apple", new BlockItem(FoodBlocks.ENCHANTED_GOLDEN_APPLE, new Item.Properties().rarity(Rarity.EPIC).food(ModFoodComponents.ENCHANTED_GOLDEN_APPLE)));
 
         // 生熟肉类
-        FOOD_MAP.put("chicken", createItem(FoodBlocks.CHICKEN, Foods.CHICKEN));
-        FOOD_MAP.put("cooked_chicken", createItem(FoodBlocks.COOKED_CHICKEN, Foods.COOKED_CHICKEN));
-        FOOD_MAP.put("beef", createItem(FoodBlocks.BEEF, Foods.BEEF));
-        FOOD_MAP.put("cooked_beef", createItem(FoodBlocks.COOKED_BEEF, Foods.COOKED_BEEF));
-        FOOD_MAP.put("mutton", createItem(FoodBlocks.MUTTON, Foods.MUTTON));
-        FOOD_MAP.put("cooked_mutton", createItem(FoodBlocks.COOKED_MUTTON, Foods.COOKED_MUTTON));
-        FOOD_MAP.put("porkchop", createItem(FoodBlocks.PORKCHOP, Foods.PORKCHOP));
-        FOOD_MAP.put("cooked_porkchop", createItem(FoodBlocks.COOKED_PORKCHOP, Foods.COOKED_PORKCHOP));
-        FOOD_MAP.put("rabbit", createItem(FoodBlocks.RABBIT, Foods.RABBIT));
-        FOOD_MAP.put("cooked_rabbit", createItem(FoodBlocks.COOKED_RABBIT, Foods.COOKED_RABBIT));
+        FOOD_MAP.put("chicken", createItem(FoodBlocks.CHICKEN, ModFoodComponents.CHICKEN));
+        FOOD_MAP.put("cooked_chicken", createItem(FoodBlocks.COOKED_CHICKEN, ModFoodComponents.COOKED_CHICKEN));
+        FOOD_MAP.put("beef", createItem(FoodBlocks.BEEF, ModFoodComponents.BEEF));
+        FOOD_MAP.put("cooked_beef", createItem(FoodBlocks.COOKED_BEEF, ModFoodComponents.COOKED_BEEF));
+        FOOD_MAP.put("mutton", createItem(FoodBlocks.MUTTON, ModFoodComponents.MUTTON));
+        FOOD_MAP.put("cooked_mutton", createItem(FoodBlocks.COOKED_MUTTON, ModFoodComponents.COOKED_MUTTON));
+        FOOD_MAP.put("porkchop", createItem(FoodBlocks.PORKCHOP, ModFoodComponents.PORKCHOP));
+        FOOD_MAP.put("cooked_porkchop", createItem(FoodBlocks.COOKED_PORKCHOP, ModFoodComponents.COOKED_PORKCHOP));
+        FOOD_MAP.put("rabbit", createItem(FoodBlocks.RABBIT, ModFoodComponents.RABBIT));
+        FOOD_MAP.put("cooked_rabbit", createItem(FoodBlocks.COOKED_RABBIT, ModFoodComponents.COOKED_RABBIT));
 
         // 鱼类
-        FOOD_MAP.put("cod", createItem(FoodBlocks.COD, Foods.COD));
-        FOOD_MAP.put("cooked_cod", createItem(FoodBlocks.COOKED_COD, Foods.COOKED_COD));
-        FOOD_MAP.put("salmon", createItem(FoodBlocks.SALMON, Foods.SALMON));
-        FOOD_MAP.put("cooked_salmon", createItem(FoodBlocks.COOKED_SALMON, Foods.COOKED_SALMON));
-        FOOD_MAP.put("pufferfish", createItem(FoodBlocks.PUFFERFISH, Foods.PUFFERFISH));
-        FOOD_MAP.put("tropical_fish", createItem(FoodBlocks.TROPICAL_FISH, Foods.TROPICAL_FISH));
+        FOOD_MAP.put("cod", createItem(FoodBlocks.COD, ModFoodComponents.COD));
+        FOOD_MAP.put("cooked_cod", createItem(FoodBlocks.COOKED_COD, ModFoodComponents.COOKED_COD));
+        FOOD_MAP.put("salmon", createItem(FoodBlocks.SALMON, ModFoodComponents.SALMON));
+        FOOD_MAP.put("cooked_salmon", createItem(FoodBlocks.COOKED_SALMON, ModFoodComponents.COOKED_SALMON));
+        FOOD_MAP.put("pufferfish", createItem(FoodBlocks.PUFFERFISH, ModFoodComponents.PUFFERFISH));
+        FOOD_MAP.put("tropical_fish", createItem(FoodBlocks.TROPICAL_FISH, ModFoodComponents.TROPICAL_FISH));
 
         // 炖菜类
-        FOOD_MAP.put("rabbit_stew", new ModStewItem(new Item.Properties().stacksTo(1).food(Foods.RABBIT_STEW),
-                FoodBlocks.RABBIT_STEW));
-        FOOD_MAP.put("mushroom_stew", new ModStewItem(new Item.Properties().stacksTo(1).food(Foods.MUSHROOM_STEW),
-                FoodBlocks.MUSHROOM_STEW));
-        FOOD_MAP.put("beetroot_soup", new ModStewItem(new Item.Properties().stacksTo(1).food(Foods.BEETROOT_SOUP),
-                FoodBlocks.BEETROOT_SOUP));
-        FOOD_MAP.put("suspicious_stew", new ModSuspiciousStewItem(new Item.Properties().stacksTo(1).food(Foods.SUSPICIOUS_STEW),
-                FoodBlocks.SUSPICIOUS_STEW));
-        FOOD_MAP.put("bowl", new BlockItem(FoodBlocks.BOWL, new Item.Properties()));
+        FOOD_MAP.put("rabbit_stew", null);
+        FOOD_MAP.put("mushroom_stew", null);
+        FOOD_MAP.put("beetroot_soup", null);
+        FOOD_MAP.put("suspicious_stew", null);
+        FOOD_MAP.put("bowl", null);
 
         // 桶
         FOOD_MAP.put("milk_bucket", null);
 
         // 怪物
-        FOOD_MAP.put("spider_eye", createItem(FoodBlocks.SPIDER_EYE, Foods.SPIDER_EYE));
+        FOOD_MAP.put("spider_eye", createItem(FoodBlocks.SPIDER_EYE, ModFoodComponents.SPIDER_EYE));
 
         // 其他
-        FOOD_MAP.put("pumpkin_pie", createItem(FoodBlocks.PUMPKIN_PIE, Foods.PUMPKIN_PIE));
-        FOOD_MAP.put("chorus_fruit", new ModChorusFruitItem(new Item.Properties().food(Foods.CHORUS_FRUIT), FoodBlocks.CHORUS_FRUIT));
+        FOOD_MAP.put("pumpkin_pie", createItem(FoodBlocks.PUMPKIN_PIE, ModFoodComponents.PUMPKIN_PIE));
+        FOOD_MAP.put("chorus_fruit", new ModChorusFruitItem(new Item.Properties().food(ModFoodComponents.CHORUS_FRUIT), FoodBlocks.CHORUS_FRUIT));
         FOOD_MAP.put("egg", new ModEggItem(new Item.Properties(), FoodBlocks.EGG));
         FOOD_MAP.put("totem_of_undying", new BlockItem(FoodBlocks.TOTEM_OF_UNDYING,
                 new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
@@ -156,11 +152,28 @@ public class FoodToBlocks {
                             new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), FoodBlocks.MILK_BUCKET);
                     break;
 
+                // 炖菜类
+                case "rabbit_stew":
+                    item = new BlockItem(FoodBlocks.RABBIT_STEW, new Item.Properties().food(Foods.RABBIT_STEW).stacksTo(1));
+                    break;
+                case "mushroom_stew":
+                    item = new BlockItem(FoodBlocks.MUSHROOM_STEW, new Item.Properties().food(Foods.MUSHROOM_STEW).stacksTo(1));
+                    break;
+                case "beetroot_soup":
+                    item = new BlockItem(FoodBlocks.BEETROOT_SOUP, new Item.Properties().food(Foods.BEETROOT_SOUP).stacksTo(1));
+                    break;
+                case "suspicious_stew":
+                    item = new ModSuspiciousStewItem(FoodBlocks.SUSPICIOUS_STEW, new Item.Properties().food(Foods.SUSPICIOUS_STEW).stacksTo(1));
+                    break;
+                case "bowl":
+                    item = new BlockItem(FoodBlocks.BOWL, new Item.Properties());
+                    break;
+
                 // 药水类
                 case "honey_bottle":
                     item = new ModHoneyBottleItem(FoodBlocks.HONEY_BOTTLE,
                             new Item.Properties().craftRemainder(Items.GLASS_BOTTLE)
-                                    .food(Foods.HONEY_BOTTLE).stacksTo(16));
+                                    .food(ModFoodComponents.HONEY_BOTTLE).stacksTo(16));
                     break;
 
                 default:

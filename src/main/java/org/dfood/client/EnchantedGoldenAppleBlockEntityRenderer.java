@@ -20,6 +20,7 @@ public class EnchantedGoldenAppleBlockEntityRenderer implements BlockEntityRende
     public EnchantedGoldenAppleBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         blockRenderer = context.getBlockRenderDispatcher();
     }
+
     @Override
     public void render(EnchantedGoldenAppleBlockEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
         if (entity.getBlockState().getBlock() instanceof FoodBlock foodBlock) {

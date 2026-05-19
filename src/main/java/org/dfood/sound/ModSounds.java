@@ -77,7 +77,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> LAVA_BUCKET_FALL = register("lava_bucket_fall");
 
     private static RegistryObject<SoundEvent> register(String path) {
-        ResourceLocation id = DFoodUtils.createModId(path);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ThreedFood.MOD_ID, path);
         return SOUND_EVENTS.register(path, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

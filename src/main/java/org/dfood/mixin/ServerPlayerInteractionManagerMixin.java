@@ -30,7 +30,7 @@ public class ServerPlayerInteractionManagerMixin {
         boolean isModFoodBlock = DFoodUtils.isModFoodBlock(blockState.getBlock());
 
         if (isModFoodBlock && player.isShiftKeyDown()) {
-            InteractionResult actionResult = blockState.use(level, player, hand, hitResult);
+            InteractionResult actionResult = blockState.useWithoutItem(level, player, hitResult);
             ItemStack itemStack = stack.copy();
             if (actionResult.consumesAction()) {
                 CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(player, blockPos, itemStack);

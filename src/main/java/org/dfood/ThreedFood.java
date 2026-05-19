@@ -19,8 +19,8 @@ public class ThreedFood {
     public static final String MOD_ID = "dfood";
     public static final Logger LOGGER = LoggerFactory.getLogger("TW`s Decorative Food");
 
-    public ThreedFood() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public ThreedFood(FMLJavaModLoadingContext context) {
+        IEventBus modEventBus = context.getModEventBus();
 
         ModBlockEntityTypes.register(modEventBus);
         ModSounds.registerAll(modEventBus);

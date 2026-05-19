@@ -1,15 +1,17 @@
 package org.dfood.item;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.dfood.util.DFoodUtils;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class ModMilkBucketItem extends MilkBucketItem implements HaveBlock{
         }
 
         InteractionResult actionResult = this.place(new BlockPlaceContext(context));
-        if (!actionResult.consumesAction() && this.isEdible()) {
+        if (!actionResult.consumesAction() && context.getItemInHand().has(DataComponents.FOOD)) {
             InteractionResult actionResult2 = this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
             return actionResult2 == InteractionResult.CONSUME ? InteractionResult.CONSUME_PARTIAL : actionResult2;
         } else {
@@ -42,9 +44,27 @@ public class ModMilkBucketItem extends MilkBucketItem implements HaveBlock{
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag context) {
-        super.appendHoverText(stack, world, tooltip, context);
-        this.getBlock().appendHoverText(stack, world, tooltip, context);
+    public String getDescriptionId() {
+        return this.getBlock().getDescriptionId();
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        this.getBlock().appendHoverText(stack, context, tooltip, flag);
+    }
+
+    @Override
+    public void onDestroyed(ItemEntity entity) {
+        ItemContainerContents itemcontainercontents = entity.getItem().set(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+        if (itemcontainercontents != null) {
+            ItemUtils.onContainerDestroyed(entity, itemcontainercontents.nonEmptyItemsCopy());
+        }
+    }
+
+    @Override
+    public FeatureFlagSet requiredFeatures() {
+        return this.getBlock().requiredFeatures();
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -38,8 +39,12 @@ public class BucketMixin {
             // 获取桶内的流体
             Fluid fluid = bucketItem.getFluid();
 
+            if (!self.getClass().equals(BucketItem.class)) {
+                return;
+            }
+
             InteractionResult result = dFood$placeBucketBlock(context, fluid);
-            if (result.shouldAwardStats()) {
+            if (result.indicateItemUse()) {
                 cir.setReturnValue(result);
                 cir.cancel();
             }

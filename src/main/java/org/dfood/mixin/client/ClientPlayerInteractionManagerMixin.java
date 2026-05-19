@@ -38,7 +38,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
         BlockState blockState = this.minecraft.level.getBlockState(blockPos);
 
         if (DFoodUtils.isModFoodBlock(blockState.getBlock()) && player.isShiftKeyDown()) {
-            InteractionResult result = blockState.use(this.minecraft.level, player, hand, hitResult);
+            InteractionResult result = blockState.useWithoutItem(this.minecraft.level, player, hitResult);
             if (result.consumesAction()) {
                 cir.setReturnValue(result);
             }

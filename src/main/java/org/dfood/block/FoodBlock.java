@@ -156,20 +156,20 @@ public class FoodBlock extends Block {
     }
 
     @Override
-    public InteractionResult use(BlockState state,
-                                 Level world,
-                                 BlockPos pos,
-                                 Player player,
-                                 InteractionHand hand,
-                                 BlockHitResult hit) {
+    public @NotNull InteractionResult useWithoutItem(BlockState state,
+                                                     Level world,
+                                                     BlockPos pos,
+                                                     Player player,
+                                                     BlockHitResult hit) {
         // 优先执行自定义钩子
         if (this.onUseHook != null) {
-            InteractionResult hookResult = this.onUseHook.interact(state, world, pos, player, hand, hit);
+            InteractionResult hookResult = this.onUseHook.interact(state, world, pos, player, hit);
             if (hookResult != InteractionResult.PASS) {
                 return hookResult;
             }
         }
 
+        InteractionHand hand = player.getUsedItemHand();
         ItemStack handStack = player.getItemInHand(hand);
         int currentCount = state.getValue(NUMBER_OF_FOOD);
         BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -439,7 +439,7 @@ public class FoodBlock extends Block {
          * @return 操作结果，决定后续行为
          */
         InteractionResult interact(BlockState state, Level world, BlockPos pos,
-                                   Player player, InteractionHand hand, BlockHitResult hit);
+                                   Player player, BlockHitResult hit);
     }
 
     /**
