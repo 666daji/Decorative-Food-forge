@@ -1,10 +1,10 @@
 package org.dfood.sound;
 
 import net.minecraft.world.level.block.SoundType;
-import net.minecraftforge.common.util.ForgeSoundType;
+import net.neoforged.neoforge.common.util.DeferredSoundType;
 
 public class ModSoundGroups {
-    public static final SoundType MEAT = new ForgeSoundType(
+    public static final SoundType MEAT = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.MEAT_BREAK,
@@ -13,7 +13,7 @@ public class ModSoundGroups {
             ModSounds.MEAT_HIT,
             ModSounds.MEAT_FALL
     );
-    public static final SoundType FISH = new ForgeSoundType(
+    public static final SoundType FISH = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.FISH_BREAK,
@@ -22,7 +22,7 @@ public class ModSoundGroups {
             ModSounds.FISH_HIT,
             ModSounds.FISH_FALL
     );
-    public static final SoundType BREAD = new ForgeSoundType(
+    public static final SoundType BREAD = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.BREAD_BREAK,
@@ -31,7 +31,7 @@ public class ModSoundGroups {
             ModSounds.BREAD_HIT,
             ModSounds.BREAD_FALL
     );
-    public static final SoundType CHORUS_FRUIT = new ForgeSoundType(
+    public static final SoundType CHORUS_FRUIT = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.CHORUS_BREAK,
@@ -40,7 +40,7 @@ public class ModSoundGroups {
             ModSounds.CHORUS_HIT,
             ModSounds.CHORUS_FALL
     );
-    public static final SoundType EGG = new ForgeSoundType(
+    public static final SoundType EGG = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.EGG_BREAK,
@@ -49,7 +49,7 @@ public class ModSoundGroups {
             ModSounds.EGG_HIT,
             ModSounds.EGG_FALL
     );
-    public static final SoundType POTION = new ForgeSoundType(
+    public static final SoundType POTION = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.POTION_BREAK,
@@ -58,7 +58,7 @@ public class ModSoundGroups {
             ModSounds.POTION_HIT,
             ModSounds.POTION_FALL
     );
-    public static final SoundType GLASS_BOTTLE = new ForgeSoundType(
+    public static final SoundType GLASS_BOTTLE = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.GLASS_BOTTLE_BREAK,
@@ -67,7 +67,7 @@ public class ModSoundGroups {
             ModSounds.GLASS_BOTTLE_HIT,
             ModSounds.GLASS_BOTTLE_FALL
     );
-    public static final SoundType WATER_BUCKET = new ForgeSoundType(
+    public static final SoundType WATER_BUCKET = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.WATER_BUCKET_BREAK,
@@ -77,7 +77,7 @@ public class ModSoundGroups {
             ModSounds.WATER_BUCKET_FALL
     );
     public static final SoundType BUCKET = SoundType.METAL;
-    public static final SoundType LAVA_BUCKET = new ForgeSoundType(
+    public static final SoundType LAVA_BUCKET = new DeferredSoundType(
             1.0f,
             1.0f,
             ModSounds.LAVA_BUCKET_BREAK,

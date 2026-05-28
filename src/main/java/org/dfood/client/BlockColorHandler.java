@@ -1,15 +1,15 @@
 package org.dfood.client;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import org.dfood.ThreedFood;
 import org.dfood.block.FoodBlocks;
 import org.dfood.block.entity.PotionBlockEntity;
 
-@Mod.EventBusSubscriber(modid = ThreedFood.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ThreedFood.MOD_ID, value = Dist.CLIENT)
 public class BlockColorHandler {
 
     @SubscribeEvent

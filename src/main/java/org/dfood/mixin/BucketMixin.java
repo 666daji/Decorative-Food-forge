@@ -1,6 +1,7 @@
 package org.dfood.mixin;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.dfood.block.FoodBlocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -36,7 +36,7 @@ public class BucketMixin {
 
         if (context.getPlayer() != null && self instanceof BucketItem bucketItem && context.getPlayer().isShiftKeyDown()) {
             // 获取桶内的流体
-            Fluid fluid = bucketItem.getFluid();
+            Fluid fluid = bucketItem.content;
 
             if (!self.getClass().equals(BucketItem.class)) {
                 return;
@@ -58,7 +58,7 @@ public class BucketMixin {
         ItemStack stack = context.getItemInHand();
 
         // 只处理原版的桶
-        if (!Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).getNamespace().equals(ResourceLocation.DEFAULT_NAMESPACE)) {
+        if (!Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(stack.getItem())).getNamespace().equals(ResourceLocation.DEFAULT_NAMESPACE)) {
             return InteractionResult.FAIL;
         }
 

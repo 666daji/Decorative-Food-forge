@@ -1,7 +1,7 @@
 package org.dfood.block;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnforceAsItems {
     public static final FoodBlock.EnforceAsItem POTATO = createAsItem("potato");
@@ -15,6 +15,6 @@ public class EnforceAsItems {
     public static final FoodBlock.EnforceAsItem LAVA_BUCKET = createAsItem("lava_bucket");
 
     private static FoodBlock.EnforceAsItem createAsItem(String item) {
-        return () -> ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(item));
+        return () -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(item));
     }
 }
